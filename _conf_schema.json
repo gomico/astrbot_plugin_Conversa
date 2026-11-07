@@ -14,7 +14,11 @@
         "description": "订阅方式",
         "hint": "auto=有互动即自动纳入；manual=需手动 /conversa watch；agent=手动+AI可通过工具调用订阅",
         "type": "string",
-        "options": ["auto", "manual", "agent"],
+        "options": [
+          "auto",
+          "manual",
+          "agent"
+        ],
         "default": "manual"
       },
       "subscribed_users": {
@@ -224,6 +228,18 @@
         "hint": "仅在框架 Agent Pipeline 不可用的降级模式下生效，控制传给 LLM 的历史消息条数。正常模式下由框架自动管理。",
         "type": "int",
         "default": 50
+      },
+      "use_wakeup_event": {
+        "description": "走框架主动唤醒链路",
+        "hint": "开启后用 AgentWakeupEvent 把主动发言排进 AstrBot 事件队列，走完整 Agent Pipeline（人格、on_llm_request 注入、发送与历史回写）。关闭则退化为直接调用 Provider，插件注入（如 humanoid_core 的状态/日程）不会生效。",
+        "type": "bool",
+        "default": true
+      },
+      "proactive_self_id": {
+        "description": "主动唤醒的 bot 账号",
+        "hint": "主动唤醒事件携带的 bot 自身账号（如 QQ 号），humanoid_core 等按 self_id 选角色的插件依赖它。留空时自动使用最近收到消息的 bot 账号，再退回平台连接态。",
+        "type": "string",
+        "default": ""
       }
     }
   },
